@@ -2,19 +2,137 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>صفحتي الشخصية</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - التحديثات</title>
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
-            background: #f5f5f5;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #fff;
         }
-        h1 { color: #333; }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+        .subtitle {
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 30px;
+        }
+
+        /* زر دمج الكل - بارز */
+        .merge-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 22px;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            border-radius: 14px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.25em;
+            font-weight: 700;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(245,87,108,0.3);
+        }
+        .merge-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(245,87,108,0.5);
+        }
+
+        .section-title {
+            font-size: 1.1em;
+            color: #aaa;
+            margin: 25px 0 15px;
+            border-right: 3px solid #667eea;
+            padding-right: 10px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 12px;
+        }
+        .update-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 18px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 12px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .update-btn:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102,126,234,0.4);
+        }
+        .icon { font-size: 1.2em; }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #555;
+            font-size: 0.85em;
+        }
     </style>
 </head>
 <body>
-    <h1>مرحباً بكم في صفحتي 👋</h1>
-    <p>هذه صفحتي على GitHub Pages</p>
+    <div class="container">
+        <h1>🎵 لوحة التحديثات</h1>
+        <p class="subtitle">اضغط على أي زر لفتح صفحة التشغيل على GitHub</p>
+
+        <!-- زر دمج الكل -->
+        <a class="merge-btn" href="https://github.com/ALMehdaly/playlist/actions/workflows/merge-iptv.yml" target="_blank">
+            <span class="icon">🔀</span> دمج الكل (Merge IPTV)
+        </a>
+
+        <div class="section-title">التحديثات الفردية</div>
+
+        <div class="grid">
+            <a class="update-btn" href="https://github.com/ALMehdaly/playlist/actions/workflows/update_1.yml" target="_blank">
+                <span class="icon">🔄</span> تحديث 1
+            </a>
+            <a class="update-btn" href="https://github.com/ALMehdaly/playlist/actions/workflows/update_2.yml" target="_blank">
+                <span class="icon">🔄</span> تحديث 2
+            </a>
+            <a class="update-btn" href="https://github.com/ALMehdaly/playlist/actions/workflows/update_3.yml" target="_blank">
+                <span class="icon">🔄</span> تحديث 3
+            </a>
+            <a class="update-btn" href="https://github.com/ALMehdaly/playlist/actions/workflows/update_4.yml" target="_blank">
+                <span class="icon">🔄</span> تحديث 4
+            </a>
+            <a class="update-btn" href="https://github.com/ALMehdaly/playlist/actions/workflows/update_5.yml" target="_blank">
+                <span class="icon">🔄</span> تحديث 5
+            </a>
+            <a class="update-btn" href="https://github.com/ALMehdaly/playlist/actions/workflows/update_6.yml" target="_blank">
+                <span class="icon">🔄</span> تحديث 6
+            </a>
+            <a class="update-btn" href="https://github.com/ALMehdaly/playlist/actions/workflows/update_7.yml" target="_blank">
+                <span class="icon">🔄</span> تحديث 7
+            </a>
+            <a class="update-btn" href="https://github.com/ALMehdaly/playlist/actions/workflows/update_8.yml" target="_blank">
+                <span class="icon">🔄</span> تحديث 8
+            </a>
+        </div>
+
+        <p class="footer">almehdaly.github.io</p>
+    </div>
 </body>
 </html>

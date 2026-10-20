@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لوحة التحكم - التحديثات</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Segoe UI', Tahoma, sans-serif;
             background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
@@ -13,11 +17,21 @@
             padding: 40px 20px;
             color: #fff;
         }
-        .container { max-width: 800px; margin: 0 auto; }
-        h1 { text-align: center; margin-bottom: 10px; font-size: 2em; }
-        .subtitle { text-align: center; color: #aaa; margin-bottom: 30px; }
-
-‎        /* زر دمج الكل */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+        .subtitle {
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 30px;
+        }
+        /* زر دمج الكل */
         .merge-btn {
             display: flex;
             align-items: center;
@@ -38,7 +52,6 @@
             transform: translateY(-3px);
             box-shadow: 0 12px 30px rgba(245,87,108,0.5);
         }
-
         .section-title {
             font-size: 1.1em;
             color: #aaa;
@@ -46,7 +59,6 @@
             border-right: 3px solid #667eea;
             padding-right: 10px;
         }
-
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -74,252 +86,64 @@
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(102,126,234,0.4);
         }
-        .icon { font-size: 1.2em; }
-
-        .footer { text-align: center; margin-top: 40px; color: #555; font-size: 0.85em; }
-
-‎        /* ===== نافذة المشغل ===== */
-        .player-open {
-            width: 100%;
-            padding: 20px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border: 0;
-            border-radius: 14px;
-            color: #fff;
-            font-family: inherit;
-            font-size: 1.15em;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 8px 20px rgba(102,126,234,0.3);
-            transition: all 0.3s ease;
+        .icon {
+            font-size: 1.2em;
         }
-        .player-open:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(102,126,234,0.5); }
-
-        dialog#playerDlg {
-            background: #25253a;
-            color: #fff;
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 16px;
-            padding: 0;
-            width: min(760px, 94vw);
-            max-height: 94vh;
-            margin: auto;
-            overflow: hidden;
-        }
-        dialog#playerDlg::backdrop { background: rgba(0,0,0,0.7); }
-        .dlg-head {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,0.12);
-        }
-        .dlg-head h2 { font-size: 1.1em; }
-        .x-btn { background: none; border: 0; color: #aaa; font-size: 1.5em; cursor: pointer; line-height: 1; }
-        .x-btn:hover { color: #fff; }
-        .dlg-body { padding: 16px 18px 18px; overflow: auto; max-height: calc(94vh - 56px); }
-        .video-box { background: #000; border-radius: 10px; aspect-ratio: 16/9; overflow: hidden; }
-        .video-box video { width: 100%; height: 100%; display: block; background: #000; }
-        .field-label { display: block; margin: 14px 0 6px; color: #aaa; font-size: 0.9em; }
-        .dlg-body input[type=text] {
-            width: 100%;
-            background: rgba(255,255,255,0.07);
-            border: 1px solid rgba(255,255,255,0.18);
-            border-radius: 10px;
-            padding: 10px 12px;
-            color: #fff;
-            font-family: Consolas, Menlo, monospace;
-            font-size: 0.9em;
-            direction: ltr; text-align: left;
-        }
-        .dlg-body input[type=text]:focus { outline: 2px solid #667eea; border-color: transparent; }
-        .key-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 8px; margin-bottom: 8px; }
-        .key-head { display: grid; grid-template-columns: 1fr 1fr auto; gap: 8px; color: #aaa; font-size: 0.9em; margin-top: 14px; margin-bottom: 6px; }
-        .row-x { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.18); border-radius: 10px; color: #f88; width: 40px; cursor: pointer; font-size: 1.1em; }
-        .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
-        .btn {
-            padding: 10px 20px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.18);
-            background: rgba(255,255,255,0.08); color: #fff; font-family: inherit; font-size: 1em; cursor: pointer; font-weight: 600;
-        }
-        .btn:hover { border-color: #667eea; }
-        .btn.go { background: linear-gradient(135deg, #667eea, #764ba2); border-color: transparent; }
-        #pStatus { margin-top: 12px; font-size: 0.9em; color: #aaa; white-space: pre-wrap; min-height: 1.4em; }
-        #pStatus.err { color: #ff8a8a; }
-        #pStatus.ok { color: #7be0a5; }
-        @media (max-width: 560px) {
-            .key-row, .key-head { grid-template-columns: 1fr; }
-            .row-x { width: 100%; height: 36px; }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #555;
+            font-size: 0.85em;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🎵 لوحة التحديثات</h1>
-        <p class="subtitle">اضغط على أي زر لفتح صفحة التشغيل على GitHub</p>
-
-‎        <!-- زر المشغل -->
-        <button class="player-open" id="openPlayer" type="button">
-            <span class="icon">▶️</span> مشغل الروابط (ClearKey)
-        </button>
-
-‎        <!-- زر دمج الكل -->
-        <a class="merge-btn" href="https://github.com/ALMehdaly/playlist/actions/workflows/merge-iptv.yml" target="_blank">
-            <span class="icon">🔀</span> دمج الكل (Merge IPTV)
+        <p class="subtitle">
+            اضغط على أي زر لفتح صفحة التحديث على GitHub
+        </p>
+        <!-- زر دمج الكل -->
+        <a
+            class="merge-btn"
+            href="https://github.com/ALMehdaly/playlist/actions/workflows/merge-iptv.yml"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            <span class="icon">🔀</span>
+            دمج الكل (Merge IPTV)
         </a>
-
         <div class="section-title">التحديثات الفردية</div>
-
         <div class="grid">
-            <a class="update-btn" href="https://github.com/ALMehdaly/playlist/actions/workflows/update_8.yml" target="_blank">
-                <span class="icon">🔄</span> 8 update
+            <a
+                class="update-btn"
+                href="https://github.com/ALMehdaly/playlist/actions/workflows/update_8.yml"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <span class="icon">🔄</span>
+                8 update
             </a>
-            <a class="update-btn" href="https://github.com/ALMehdaly/playlist/actions/workflows/merge-vip.yml" target="_blank">
-                <span class="icon">🔄</span> تحديث VIP
+            <a
+                class="update-btn"
+                href="https://github.com/ALMehdaly/playlist/actions/workflows/merge-vip.yml"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <span class="icon">🔄</span>
+                تحديث VIP
             </a>
-            <a class="update-btn" href="https://raw.github.com/ALMehdaly/playlist/TV/token.txt" target="_blank">
-                <span class="icon">🔄</span> تعديل 8
+            <a
+                class="update-btn"
+                href="https://raw.github.com/ALMehdaly/playlist/TV/token.txt"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <span class="icon">🔄</span>
+                تعديل 8
             </a>
         </div>
-
         <p class="footer">almehdaly.github.io</p>
     </div>
-
-‎    <!-- نافذة المشغل -->
-    <dialog id="playerDlg">
-        <div class="dlg-head">
-            <h2>▶️ مشغل الروابط</h2>
-            <button class="x-btn" id="closePlayer" type="button" aria-label="إغلاق">×</button>
-        </div>
-        <div class="dlg-body">
-            <div class="video-box"><video id="pVideo" controls autoplay playsinline></video></div>
-
-            <label class="field-label" for="pUrl">رابط البث (‎.mpd أو ‎.m3u8)</label>
-            <input type="text" id="pUrl" placeholder="https://example.com/stream/manifest.mpd" autocomplete="off">
-
-            <div class="key-head"><span>KID</span><span>KEY</span><span></span></div>
-            <div id="keyRows"></div>
-            <button class="btn" id="addKey" type="button">+ إضافة مفتاح</button>
-
-            <label class="field-label" for="pLic">رابط سيرفر الترخيص (اختياري – بدل المفاتيح)</label>
-            <input type="text" id="pLic" placeholder="https://license.example.com/clearkey" autocomplete="off">
-
-            <div class="btn-row">
-                <button class="btn go" id="pPlay" type="button">تشغيل</button>
-                <button class="btn" id="pStop" type="button">إيقاف</button>
-            </div>
-            <div id="pStatus"></div>
-        </div>
-    </dialog>
-
-    <script src="https://cdn.jsdelivr.net/npm/shaka-player@4.7.11/dist/shaka-player.compiled.js"></script>
-    <script>
-    (function () {
-        var $ = function (id) { return document.getElementById(id); };
-        var dlg = $('playerDlg'), video = $('pVideo'), statusEl = $('pStatus'), rows = $('keyRows');
-        var player = null;
-
-        function setStatus(msg, cls) { statusEl.textContent = msg || ''; statusEl.className = cls || ''; }
-
-‎        /* ---------- خانات المفاتيح ---------- */
-        function addRow(kid, key) {
-            var row = document.createElement('div'); row.className = 'key-row';
-            var k1 = document.createElement('input'); k1.type = 'text'; k1.placeholder = 'KID (32 حرف hex)'; k1.value = kid || '';
-            var k2 = document.createElement('input'); k2.type = 'text'; k2.placeholder = 'KEY (32 حرف hex)'; k2.value = key || '';
-            [k1, k2].forEach(function (i) { i.autocomplete = 'off'; i.spellcheck = false; });
-‎            // لصق kid:key في أي خانة يُقسَّم تلقائيًا
-            function split(e) {
-                var v = e.target.value.trim();
-                if (v.indexOf(':') > 0) {
-                    var p = v.split(':'); k1.value = p[0].trim(); k2.value = (p[1] || '').trim();
-                }
-            }
-            k1.addEventListener('input', split); k2.addEventListener('input', split);
-            var x = document.createElement('button'); x.type = 'button'; x.className = 'row-x'; x.textContent = '✕';
-            x.setAttribute('aria-label', 'حذف'); x.onclick = function () { if (rows.children.length > 1) row.remove(); else { k1.value = ''; k2.value = ''; } };
-            row.appendChild(k1); row.appendChild(k2); row.appendChild(x); rows.appendChild(row);
-        }
-        addRow();
-        $('addKey').onclick = function () { addRow(); };
-
-‎        /* ---------- أدوات المفاتيح ---------- */
-        function isHex(s) { return /^[0-9a-fA-F]+$/.test(s) && s.length % 2 === 0; }
-        function b64uToHex(s) {
-            s = s.replace(/-/g, '+').replace(/_/g, '/'); while (s.length % 4) s += '=';
-            return Array.prototype.map.call(atob(s), function (c) { return ('0' + c.charCodeAt(0).toString(16)).slice(-2); }).join('');
-        }
-        function toHex(s) { s = s.replace(/-/g, ''); return isHex(s) ? s.toLowerCase() : b64uToHex(s); }
-
-‎        /* ---------- المشغل ---------- */
-        function initPlayer() {
-            shaka.polyfill.installAll();
-            if (!shaka.Player.isBrowserSupported()) { setStatus('هذا المتصفح لا يدعم التشغيل. استخدم Chrome أو Edge أو Firefox.', 'err'); return Promise.resolve(false); }
-            player = new shaka.Player();
-            return player.attach(video).then(function () {
-                player.addEventListener('error', function (e) { showError(e.detail); });
-                return true;
-            });
-        }
-        function showError(err) {
-            var code = err && err.code, cat = err && err.category;
-            var msg = 'تعذّر التشغيل (رمز الخطأ ' + code + ').';
-            if (cat === 1) msg += '\nمشكلة اتصال بالرابط: قد يكون الرابط منتهيًا، أو أن السيرفر يمنع الطلب من المتصفح (CORS)، أو يشترط User-Agent/Referer لا يستطيع المتصفح إرسالها.';
-            else if (cat === 6) msg += '\nمشكلة في مفتاح التشفير أو الترخيص. تأكد من صحة KID وKEY.';
-            else if (cat === 4) msg += '\nصيغة البث غير مدعومة في هذا المتصفح.';
-            setStatus(msg, 'err');
-        }
-
-        function play() {
-            var url = $('pUrl').value.trim();
-            if (!url) { setStatus('أدخل رابط البث أولًا', 'err'); return; }
-            var drm = { clearKeys: {}, servers: {} };
-            var lic = $('pLic').value.trim();
-            try {
-                if (lic) {
-                    drm.servers['org.w3.clearkey'] = lic;
-                } else {
-                    Array.prototype.forEach.call(rows.children, function (row) {
-                        var i = row.querySelectorAll('input');
-                        var kid = i[0].value.trim(), key = i[1].value.trim();
-                        if (!kid && !key) return;
-                        if (!kid || !key) throw new Error('أكمل خانتي KID وKEY معًا');
-                        var kh = toHex(kid), vh = toHex(key);
-                        if (kh.length !== 32 || vh.length !== 32) throw new Error('طول KID وKEY يجب أن يكون 16 بايت (32 حرف hex)');
-                        drm.clearKeys[kh] = vh;
-                    });
-                }
-            } catch (e) { setStatus(e.message || 'مفتاح غير صالح', 'err'); return; }
-
-            setStatus('جارٍ التحميل…');
-            var ready = player ? Promise.resolve(true) : initPlayer();
-            ready.then(function (ok) {
-                if (!ok) return;
-                return player.unload().then(function () {
-                    player.resetConfiguration();
-                    player.configure({ drm: drm });
-                    return player.load(url);
-                }).then(function () {
-                    video.play().catch(function () {});
-                    var n = Object.keys(drm.clearKeys).length;
-                    setStatus('يعمل' + (n ? ' – ClearKey (' + n + ' مفتاح)' : lic ? ' – ClearKey (سيرفر ترخيص)' : ''), 'ok');
-                });
-            }).catch(function (e) { if (e && e.code) showError(e); else setStatus('خطأ: ' + (e && e.message || e), 'err'); });
-        }
-
-        function stop() {
-            if (player) player.unload().catch(function () {});
-            video.pause(); video.removeAttribute('src'); video.load();
-            setStatus('');
-        }
-
-        $('openPlayer').onclick = function () { dlg.showModal(); };
-        $('closePlayer').onclick = function () { stop(); dlg.close(); };
-        dlg.addEventListener('cancel', stop);
-        $('pPlay').onclick = play;
-        $('pStop').onclick = stop;
-        $('pUrl').addEventListener('keydown', function (e) { if (e.key === 'Enter') play(); });
-    })();
-    </script>
 </body>
 </html>
